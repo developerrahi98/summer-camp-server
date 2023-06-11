@@ -45,7 +45,15 @@ async function run() {
       console.log(classes);
       const result = await selectedClassCollection.insertOne(classes);
       res.send(result);
-
+    })
+    app.get('/selectedClass', async(req, res)=>{
+      const email = req.query.email;
+      if(!email){
+        res.send([]);
+      }
+      const query = {email: email}
+      const result = await selectedClassCollection.findOne(query).toArray();
+      res.send(result);
     })
 
 
