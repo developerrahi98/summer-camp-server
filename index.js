@@ -96,12 +96,23 @@ async function run() {
       console.log(email);
       const decodedEmail = req.decoded.email;
       if(email !== decodedEmail) {
-        return  res.status(403).send({error : true , message :  'porviden access'});
+        return  res.status(403).send({error : true , message :  'forbidden access'});
       }
       const query = { email: email };
       const result = await cartCollection.find(query).toArray();
       res.send(result);
     });
+
+    app.get('/users/admin/:email',verifyJWT, async (req, res) =>{
+      const email = req.params.email;
+      if(req.decoded.email !== email){
+        res.send({ admin : false });
+      }
+      const query = {email: email};
+      const user = await usersCollection.findOne(query);
+      const result = { admin: user?.role === 'admin'}
+      res.send(result);
+    })
 
     app.post("/carts", async (req, res) => {
       const item = req.body;
