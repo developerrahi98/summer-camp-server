@@ -14,7 +14,7 @@ const verifyJWT = (req, res, next) => {
     return res.status(401).send({error : true , message : 'unauthorized access'});
   }
   const token = authorization.split(' ')[1];
-  jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err, decoded) =>{
+  jwt.verify(token,'22bf1e295937411ad2677dc6fe8e909049051660d238802ccb85730904712cd1ce6cb84e74fe698fa843b4b6e6339b2f9b0cccbd88e1c592e70f92bf21954fbb ',(err, decoded) =>{
     if(err){
       return res.status(401).send({error : true , message :  'unauthorized access'});
     }
