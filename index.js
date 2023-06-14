@@ -97,6 +97,11 @@ async function run() {
       const result = await classCollection.find().toArray();
       res.send(result);
     });
+    app.post("/classes",verifyJWT, verifyAdmin, async (req, res) => {
+      const newItem = req.body
+      const result = await classCollection.insertOne(newItem);
+      res.send(result);
+    })
     app.get("/teachers", async (req, res) => {
       const result = await teacherCollection.find().toArray();
       res.send(result);
